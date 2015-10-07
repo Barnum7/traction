@@ -1,0 +1,67 @@
+<div class="row">
+  <div class="col s12 project-banner">
+    <h2><%= @team_member.first_name %> <%= @team_member.last_name %></h2>
+    <h4><%= @team_member.email %></h4>
+    <div class="remove-member">
+      <form method="post" action="/member/<%= @team_member.id %>/delete">
+        <button class="btn waves-effect waves-light" type="submit" name="action">Remove Member
+        <i class="material-icons right">error</i>
+        <input type="hidden" name ="memberid" value="<%= @team_member.id %>">
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="row off-white projects">
+  <div class="col s6">
+    <div class="container">
+      <h3>Assigned Tasks:</h3>
+      <ul class="collection">
+        <% @tasks.each do |task| %>
+          <li class="collection-item avatar">
+            <i class="fa fa-user fa-2x circle"></i>
+            <span class="title"><%= task.description %></span>
+            <p>Assigned to: <%= @team_member.first_name %> <%= @team_member.last_name %></p>
+            <p>Project: <a href="/dashboard/project/<%= task.project.id %>"><%= task.project.name %></a></p>
+            <a href="#!" class="secondary-content"><i class="fa fa-check-circle fa-3x"></i></a>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+  <div class="col s6">
+    <div class="container">
+      <h3>Skills:</h3>
+      <ul class="collection">
+        <% @skills.each do |skill| %>
+          <li class="collection-item avatar">
+            <i class="fa fa-wrench fa-3x circle blue-grey darken-4"></i>
+            <span class="title skill-list"><%= skill.name %></span>
+          </li>
+        <% end %>
+      </ul>
+      <ul class="collapsible" data-collapsible="accordion">
+        <li>
+          <div class="collapsible-header"><i class="fa fa-plus-square"></i>Add Skill</div>
+          <div class="collapsible-body">
+            <p>
+              <div class="container">
+                <form action="/member/:id" method="post">
+                  <div class="row">
+                    <div class="col s8">
+                      <input type="text" name="skill" placeholder="Skill">
+                    </div>
+                    <input type="hidden" name="member_id" value="<%= @team_member.id %>">
+                    <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                      <i class="material-icons right">send</i>
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
